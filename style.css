@@ -309,10 +309,11 @@ section.fade-in {
     font-weight: bold;
     color: var(--accent-red);
     margin-bottom: 30px;
-    cursor: pointer;
     letter-spacing: 0.1em;
     transition: all 0.2s ease;
     display: inline-block;
+    user-select: none;
+    pointer-events: none;
 }
 
 .hashtag:hover {

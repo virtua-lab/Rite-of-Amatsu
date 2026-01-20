@@ -301,18 +301,7 @@
         const footerMsg = document.querySelector('.footer-message');
         if (footerMsg) storyObserver.observe(footerMsg);
 
-        // Hashtag Copy Functionality
-        const hashtagData = document.getElementById('hashtag');
-        if (hashtagData) {
-            hashtagData.addEventListener('click', () => {
-                const text = hashtagData.textContent;
-                navigator.clipboard.writeText(text).then(() => {
-                    alert('ハッシュタグをコピーしました！');
-                }).catch(err => {
-                    console.error('コピーに失敗しました', err);
-                });
-            });
-        }
+
     </script>
 </body>
 
