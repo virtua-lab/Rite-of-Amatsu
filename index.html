@@ -25,7 +25,6 @@
                 <span>ティザーPV</span>
             </a>
         </div>
-        <div class="scroll-down"></div>
     </header>
 
     <main>
@@ -71,15 +70,18 @@
         <section class="story-section">
             <div class="story-content">
                 <h2 class="section-title">STORY</h2>
+                <div class="story-scroll-indicator">
+                    <span>←</span> SCROLL
+                </div>
                 <div class="story-text-container">
                     <p class="story-accent">ここは信仰篤き古き時代、ある地域、とある村。</p>
                     <p>この村に古くから伝わる儀式、アマツ。</p>
-                    <p>アマツでは神に選ばれた子のいる4軒の軒先に神の矢が刺さるとされ、</p>
-                    <p><span class="highlight-red">あなた達4人は神に選ばれた儀式の"同志"となった。</span></p>
+                    <p>アマツでは神に選ばれた子のいる四軒の軒先に神の矢が刺さるとされ、</p>
+                    <p><span class="highlight-red">あなた達四人は神に選ばれた儀式の"同志"となった。</span></p>
                     <p class="story-spacer"></p>
-                    <p>神に選ばれた4人の同志がすべきこと、それは生贄の選出。</p>
+                    <p>神に選ばれた四人の同志がすべきこと、それは生贄の選出。</p>
                     <p>生贄に相応しいとされるのは村に対する罪の大きさがより大きい者。</p>
-                    <p>あなた達は1日の間、<span class="highlight-large">生贄</span>を選ぶために情報を集め、話し合う。</p>
+                    <p>あなた達は一日の間、<span class="highlight-large">生贄</span>を選ぶために情報を集め、話し合う。</p>
                     <p class="story-spacer"></p>
                     <p>罪を犯したことのない者などいるのだろうか？</p>
                     <p>隠しきれる罪などどれほど存在するのだろうか？</p>
@@ -123,7 +125,7 @@
             </div>
             <div class="spec-item">
                 <dt>プレイ人数</dt>
-                <dd>PL4名＋GM</dd>
+                <dd>PL四名＋GM</dd>
             </div>
             <div class="spec-item">
                 <dt>企画・総括</dt>
@@ -275,10 +277,8 @@
             overlay.classList.remove('active');
         });
 
-        overlay.addEventListener('click', (e) => {
-            if (e.target === overlay) {
-                overlay.classList.remove('active');
-            }
+        overlay.addEventListener('click', () => {
+            overlay.classList.remove('active');
         });
 
         // Intersection Observer for Story Final Impact
@@ -300,6 +300,38 @@
 
         const footerMsg = document.querySelector('.footer-message');
         if (footerMsg) storyObserver.observe(footerMsg);
+
+        // Drag scrolling for Story Section
+        const storyContainer = document.querySelector('.story-text-container');
+        if (storyContainer) {
+            // Start from the right (standard for vertical-rl)
+            storyContainer.scrollLeft = 0; // In vertical-rl, 0 is often the rightmost point or depends on browser. 
+            // Actually, horizontal scroll in vertical-rl can be tricky.
+
+            let isDown = false;
+            let startX;
+            let scrollLeft;
+
+            storyContainer.addEventListener('mousedown', (e) => {
+                isDown = true;
+                storyContainer.classList.add('active-drag');
+                startX = e.pageX - storyContainer.offsetLeft;
+                scrollLeft = storyContainer.scrollLeft;
+            });
+            storyContainer.addEventListener('mouseleave', () => {
+                isDown = false;
+            });
+            storyContainer.addEventListener('mouseup', () => {
+                isDown = false;
+            });
+            storyContainer.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - storyContainer.offsetLeft;
+                const walk = (x - startX) * 2; // Scroll speed
+                storyContainer.scrollLeft = scrollLeft - walk;
+            });
+        }
 
 
     </script>
